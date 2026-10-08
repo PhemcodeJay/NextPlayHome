@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<title>Next Play Media — YouTube Content Creation & SaaS Services</title>
+<meta name="description" content="Next Play Media does two things: YouTube content creation and SaaS services. Two revenue engines, one company." />
+<style>
+  :root{
+    --bg:#0f0f1a;
+    --bg-soft:#15152a;
+    --card:#18182b;
+    --card-hi:rgba(255,255,255,.04);
+    --text:#f0f0f0;
+    --muted:#b0b0c0;
+    --dim:#8a8a9a;
+    --border:rgba(255,255,255,.06);
+    --orange:#d45a2e;
+    --teal:#4ecdc4;
+    --gold:#f5c542;
+    --blue:#6a9fec;
+    --radius:18px;
+    --max:1200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.6;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(15,15,26,.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.3px}
+  .logo-mark{
+    width:36px;height:36px;border-radius:10px;
+    background:linear-gradient(135deg,var(--teal),var(--orange));
+    display:grid;place-items:center;font-weight:900;color:#0f0f1a;font-size:17px;
+    box-shadow:0 0 22px rgba(78,205,196,.3);
+  }
+  .logo span{font-size:1.08rem}
+  .logo em{font-style:normal;color:var(--orange)}
+  .nav-links{display:flex;gap:26px;list-style:none;font-size:.93rem;color:var(--muted)}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{display:flex;gap:10px;align-items:center}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 20px;border-radius:40px;font-weight:600;font-size:.88rem;
+    border:1px solid transparent;cursor:pointer;transition:.2s;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--orange),#b8461e);
+    color:#fff;box-shadow:0 0 24px rgba(212,90,46,.28);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(212,90,46,.45)}
+  .btn-teal{
+    background:linear-gradient(135deg,var(--teal),#2fa89f);
+    color:#062a27;box-shadow:0 0 24px rgba(78,205,196,.28);
+  }
+  .btn-teal:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(78,205,196,.45)}
+  .btn-ghost{border-color:var(--border);color:var(--text);background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{background:rgba(255,255,255,.08)}
+  .menu-btn{display:none;background:none;border:0;color:var(--text);font-size:1.6rem;cursor:pointer}
+
+  /* HERO */
+  .hero{
+    position:relative;padding:96px 0 84px;
+    background:
+      radial-gradient(900px 420px at 82% -10%, rgba(212,90,46,.22), transparent 60%),
+      radial-gradient(760px 380px at 8% 6%, rgba(78,205,196,.16), transparent 60%);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:56px;align-items:center}
+  .pill{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:7px 15px;border-radius:40px;font-size:.79rem;font-weight:600;
+    background:rgba(78,205,196,.1);border:1px solid rgba(78,205,196,.3);
+    color:var(--teal);margin-bottom:22px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+  h1{
+    font-size:clamp(2.3rem,5vw,3.7rem);
+    line-height:1.08;font-weight:800;letter-spacing:-1.4px;margin-bottom:20px;
+  }
+  .grad{background:linear-gradient(120deg,var(--orange),#e8824f 40%,var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);font-size:1.07rem;max-width:570px;margin-bottom:30px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-stats{display:flex;gap:38px;margin-top:44px;flex-wrap:wrap}
+  .stat b{display:block;font-size:1.55rem;font-weight:800;color:var(--text)}
+  .stat span{font-size:.79rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.4px}
+
+  /* ENGINE CARDS IN HERO */
+  .engine-stack{display:grid;gap:18px}
+  .engine{
+    background:var(--card);border:1px solid var(--border);border-radius:20px;
+    padding:24px 26px;position:relative;overflow:hidden;transition:.25s;
+  }
+  .engine:hover{transform:translateY(-4px)}
+  .engine.teal{border-color:rgba(78,205,196,.3)}
+  .engine.orange{border-color:rgba(212,90,46,.3)}
+  .engine.teal::before,.engine.orange::before{
+    content:"";position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;
+  }
+  .engine.teal::before{background:radial-gradient(circle,rgba(78,205,196,.22),transparent 70%)}
+  .engine.orange::before{background:radial-gradient(circle,rgba(212,90,46,.22),transparent 70%)}
+  .engine h3{font-size:1.12rem;font-weight:700;margin-bottom:6px;position:relative}
+  .engine.teal h3{color:var(--teal)}
+  .engine.orange h3{color:var(--orange)}
+  .engine p{color:var(--muted);font-size:.9rem;position:relative}
+  .engine .badges{margin-top:12px;position:relative}
+
+  /* SECTIONS */
+  section{padding:84px 0}
+  .sec-head{margin-bottom:44px;max-width:660px}
+  .sec-tag{color:var(--orange);font-weight:700;letter-spacing:2px;font-size:.77rem;text-transform:uppercase;display:block;margin-bottom:12px}
+  .sec-tag.teal{color:var(--teal)}
+  h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;letter-spacing:-.8px;line-height:1.15;margin-bottom:14px}
+  .sec-head p{color:var(--muted)}
+
+  /* TAGS */
+  .tag{
+    display:inline-block;padding:4px 14px;border-radius:40px;
+    font-size:12px;font-weight:600;margin:2px;
+  }
+  .tag-green{background:rgba(78,205,196,.18);color:var(--teal)}
+  .tag-orange{background:rgba(212,90,46,.18);color:var(--orange)}
+  .tag-blue{background:rgba(74,144,226,.18);color:var(--blue)}
+  .tag-gold{background:rgba(245,197,66,.18);color:var(--gold)}
+  .tag-red{background:rgba(242,107,107,.18);color:#f26b6b}
+
+  /* CARDS */
+  .card{
+    background:var(--card-hi);border-radius:var(--radius);padding:24px 26px;
+    border:1px solid var(--border);transition:.2s;
+  }
+  .card:hover{background:rgba(255,255,255,.07)}
+  .card-title{font-size:1.02rem;font-weight:700;color:var(--orange);margin-bottom:10px}
+  .card-icon{font-size:2.2rem;display:block;margin-bottom:12px}
+  ul.clean{list-style:none;padding:0}
+  ul.clean li{
+    padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);
+    display:flex;align-items:flex-start;gap:10px;color:var(--muted);font-size:.93rem;
+  }
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li strong{color:var(--text)}
+  .bullet{color:var(--orange);font-size:1rem;line-height:1.5;flex-shrink:0}
+  .bullet.teal{color:var(--teal)}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+  .highlight-box{
+    background:rgba(212,90,46,.12);border-left:5px solid var(--orange);
+    padding:18px 24px;border-radius:0 14px 14px 0;margin:18px 0;
+    color:var(--muted);font-size:.95rem;
+  }
+  .highlight-box strong{color:var(--text)}
+  .highlight-box.teal{background:rgba(78,205,196,.1);border-left-color:var(--teal)}
+
+  /* ENGINE BOXES */
+  .channel-box{
+    border-radius:var(--radius);padding:26px 28px;
+    border:2px solid var(--border);transition:.25s;
+  }
+  .channel-box.kids{border-color:rgba(78,205,196,.3);background:rgba(78,205,196,.04)}
+  .channel-box.pro{border-color:rgba(212,90,46,.3);background:rgba(212,90,46,.04)}
+  .channel-box:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+  .channel-title{font-size:1.3rem;font-weight:700;margin-bottom:14px}
+  .channel-title.kids{color:var(--teal)}
+  .channel-title.pro{color:var(--orange)}
+  .channel-title small{display:block;font-size:.9rem;color:var(--muted);font-weight:400;margin-top:4px}
+
+  /* VIDEOS */
+  .videos{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .vcard{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;transition:.28s;
+  }
+  .vcard:hover{border-color:rgba(212,90,46,.35);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .vthumb{
+    aspect-ratio:16/9;position:relative;overflow:hidden;
+    background:#0e1621;
+  }
+  .vthumb iframe{
+    position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
+  }
+  .vthumb img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  .vplay{
+    position:absolute;inset:0;margin:auto;width:62px;height:62px;border-radius:50%;
+    border:0;cursor:pointer;background:rgba(15,15,26,.72);backdrop-filter:blur(4px);
+    display:grid;place-items:center;transition:.25s;
+    box-shadow:0 8px 26px rgba(0,0,0,.45);
+  }
+  .vplay::before{
+    content:"";display:block;width:0;height:0;margin-left:4px;
+    border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #fff;
+  }
+  .vplay:hover{background:var(--orange);transform:scale(1.07)}
+  .vinfo{padding:16px}
+  .vinfo h4{font-size:.95rem;font-weight:700;margin-bottom:6px;line-height:1.35}
+  .vinfo small{color:var(--muted);font-size:.78rem}
+  .vinfo a{color:var(--teal);font-size:.78rem;font-weight:600}
+  .vinfo a:hover{text-decoration:underline}
+
+  /* STATS BAND */
+  .stats-band{
+    background:linear-gradient(120deg,rgba(78,205,196,.08),rgba(212,90,46,.1));
+    border:1px solid var(--border);border-radius:26px;padding:48px 40px;
+  }
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center}
+  .stats-grid .stat b{font-size:2.1rem;color:var(--orange)}
+  .stats-grid .stat span{letter-spacing:1px}
+
+  /* INVESTOR CTA */
+  .invest-band{
+    background:linear-gradient(120deg,rgba(212,90,46,.12),rgba(78,205,196,.1));
+    border:1px solid rgba(212,90,46,.25);border-radius:26px;padding:56px 40px;
+    text-align:center;position:relative;overflow:hidden;
+  }
+  .invest-band h2{margin-bottom:14px}
+  .invest-band > p{color:var(--muted);max-width:600px;margin:0 auto 30px}
+  .invest-band .hero-cta{justify-content:center}
+  .ask{
+    font-size:clamp(2rem,5vw,3rem);font-weight:800;color:var(--orange);
+    letter-spacing:-1px;margin:8px 0 18px;
+  }
+
+  /* ROI TABLE */
+  .roi-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:.9rem}
+  .roi-table th,.roi-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+  .roi-table th{color:var(--orange);font-weight:600;letter-spacing:.3px}
+  .roi-table tr:hover{background:rgba(255,255,255,.02)}
+  .roi-table small{color:var(--dim)}
+
+  /* TIMELINE */
+  .timeline-item{border-left:3px solid var(--teal);padding-left:16px;margin-bottom:16px}
+  .timeline-item.orange{border-left-color:var(--orange)}
+  .timeline-item.gold{border-left-color:var(--gold)}
+  .timeline-item.blue{border-left-color:var(--blue)}
+  .timeline-item strong{font-size:1rem;display:block;margin-bottom:6px}
+
+  /* TEAM */
+  .team-card{
+    border-radius:var(--radius);padding:26px 28px;
+    border:2px solid var(--border);transition:.25s;
+  }
+  .team-card.founder{border-color:rgba(212,90,46,.3);background:rgba(212,90,46,.04)}
+  .team-card.dev{border-color:rgba(78,205,196,.3);background:rgba(78,205,196,.04)}
+  .team-card:hover{transform:translateY(-4px)}
+  .team-role{font-size:1.08rem;font-weight:700;margin-bottom:12px}
+  .team-card.founder .team-role{color:var(--orange)}
+  .team-card.dev .team-role{color:var(--teal)}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:56px 0 32px;margin-top:40px}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+  .foot-brand p{color:var(--muted);font-size:.9rem;margin-top:16px;max-width:290px}
+  .socials{display:flex;gap:12px;margin-top:22px}
+  .soc{
+    width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+    background:rgba(255,255,255,.05);border:1px solid var(--border);transition:.2s;font-size:1rem;
+  }
+  .soc:hover{background:var(--orange);color:#fff;border-color:var(--orange)}
+  .foot-col h5{font-size:.79rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin-bottom:18px}
+  .foot-col ul{list-style:none;display:grid;gap:11px}
+  .foot-col a{color:var(--text);font-size:.9rem;opacity:.82}
+  .foot-col a:hover{opacity:1;color:var(--orange)}
+  .foot-bottom{border-top:1px solid var(--border);padding-top:26px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--dim);font-size:.83rem}
+
+  /* RESPONSIVE */
+  @media(max-width:980px){
+    .hero-grid,.grid-2{grid-template-columns:1fr;gap:44px}
+    .videos,.grid-3{grid-template-columns:repeat(2,1fr)}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:34px}
+    .nav-links{display:none}
+    .menu-btn{display:block}
+  }
+  @media(max-width:600px){
+    .videos,.grid-3,.stats-grid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr}
+    .hero{padding:60px 0}
+    section{padding:58px 0}
+    .invest-band,.stats-band{padding:40px 22px}
+    .nav-cta .btn-ghost{display:none}
+  }
+  @media print{
+    body{background:#fff;color:#111}
+    header{position:static;background:#fff;border-bottom:1px solid #ccc}
+    .hero{background:none}
+    .card,.engine,.channel-box,.vcard,.team-card,.invest-band,.stats-band{background:#f5f5f7;border-color:#ddd}
+    .btn{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#" class="logo">
+        <div class="logo-mark">N</div>
+        <span>Next Play<em>Media</em></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#market">Market</a></li>
+        <li><a href="#invest">Invest</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://www.youtube.com/@NextPlayMedia07" target="_blank" rel="noopener" class="btn btn-ghost">YouTube</a>
+        <a href="#invest" class="btn btn-primary">Investor Deck</a>
+        <button class="menu-btn" aria-label="Menu">☰</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="pill"><span class="dot"></span> Two services · One company</div>
+      <h1>YouTube content creation. <span class="grad">SaaS services.</span></h1>
+      <p>Next Play Media does two things. We create YouTube content that builds audience and revenue, and we provide SaaS services that deliver high-margin, recurring income. Simple, focused, and built to scale.</p>
+      <div class="hero-cta">
+        <a href="https://www.youtube.com/@NextPlayMedia07?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-teal">▶ Subscribe on YouTube</a>
+        <a href="#invest" class="btn btn-primary">View Investment Opportunity</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>2</b><span>Services</span></div>
+        <div class="stat"><b>$25–50K</b><span>Raising</span></div>
+        <div class="stat"><b>12 mo</b><span>To SaaS Milestone</span></div>
+      </div>
+    </div>
+
+    <div class="engine-stack">
+      <div class="engine teal">
+        <h3>🎬 YouTube Content Creation</h3>
+        <p>We plan, produce, and publish YouTube content — from concept and scripting to editing and thumbnails. Built to grow audience, engagement, and ad/sponsor revenue.</p>
+        <div class="badges"><span class="tag tag-green">Audience growth</span> <span class="tag tag-blue">Fast cash flow</span></div>
+      </div>
+      <div class="engine orange">
+        <h3>💻 SaaS Services</h3>
+        <p>We build and deliver SaaS products and services for businesses — custom platforms, subscription tools, and owned software under the Next Play Media brand.</p>
+        <div class="badges"><span class="tag tag-orange">Higher margin</span> <span class="tag tag-gold">Recurring revenue</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES / WHAT WE DO -->
+<section id="services" style="background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">What We Do</span>
+      <h2>Two Services, One Vision</h2>
+      <p>One legal entity, one team, two independent revenue streams. YouTube content builds the brand and cash flow; SaaS services build the recurring, scalable income.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="channel-box kids">
+        <div class="channel-title kids">🎬 Service 1 <small>YouTube Content Creation</small></div>
+        <ul class="clean">
+          <li><span class="bullet teal">🎯</span> Full YouTube channel strategy — niche, format, upload schedule</li>
+          <li><span class="bullet teal">🎬</span> End-to-end production — scripting, filming, editing, thumbnails</li>
+          <li><span class="bullet teal">💰</span> Revenue through ads, sponsorships, and managed content packages</li>
+          <li><span class="bullet teal">📈</span> Audience growth, brand presence, referral flywheel</li>
+        </ul>
+        <div style="margin-top:14px"><span class="tag tag-green">Cash-generating</span> <span class="tag tag-blue">Low risk</span></div>
+      </div>
+
+      <div class="channel-box pro">
+        <div class="channel-title pro">💻 Service 2 <small>SaaS Services & Products</small></div>
+        <ul class="clean">
+          <li><span class="bullet">🛠️</span> Custom SaaS platforms — fintech, nonprofit, membership, business tools</li>
+          <li><span class="bullet">📦</span> Owned SaaS products sold directly under the Next Play Media brand</li>
+          <li><span class="bullet">💰</span> Project fees + one-time / subscription pricing</li>
+          <li><span class="bullet">📈</span> Higher margins, recurring revenue, product equity</li>
+        </ul>
+        <div style="margin-top:14px"><span class="tag tag-orange">Higher margin</span> <span class="tag tag-gold">Scalable</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;background:rgba(212,90,46,.06);border-radius:16px;padding:16px 22px;text-align:center;color:var(--muted)">
+      ⚡ <strong style="color:var(--text)">Shared operating base</strong> · one legal entity, one team, two independent revenue streams
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Latest uploads</span>
+      <h2>Content in action</h2>
+      <p>Watch the latest from the Next Play Media YouTube channel — play them right here or open on YouTube for the full experience.</p>
+    </div>
+
+    <div class="videos">
+      <!-- Video 1: rym6pu1qZFI -->
+      <div class="vcard">
+        <div class="vthumb">
+          <img class="vposter" src="https://i.ytimg.com/vi/rym6pu1qZFI/maxresdefault.jpg" alt="Next Play Media video thumbnail" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/rym6pu1qZFI/hqdefault.jpg'" />
+          <button class="vplay" type="button" data-embed="https://www.youtube-nocookie.com/embed/rym6pu1qZFI?autoplay=1" aria-label="Play video"></button>
+        </div>
+        <div class="vinfo">
+          <h4>Next Play Media — Featured Video</h4>
+          <small>Next Play Media</small>
+          <div style="margin-top:8px"><a href="https://youtu.be/rym6pu1qZFI" target="_blank" rel="noopener">Watch on YouTube →</a></div>
+        </div>
+      </div>
+
+      <!-- Video 2: 0DUFgI_O2YE -->
+      <div class="vcard">
+        <div class="vthumb">
+          <img class="vposter" src="https://i.ytimg.com/vi/0DUFgI_O2YE/maxresdefault.jpg" alt="Next Play Media video thumbnail" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/0DUFgI_O2YE/hqdefault.jpg'" />
+          <button class="vplay" type="button" data-embed="https://www.youtube-nocookie.com/embed/0DUFgI_O2YE?autoplay=1" aria-label="Play video"></button>
+        </div>
+        <div class="vinfo">
+          <h4>Next Play Media — Latest Upload</h4>
+          <small>Next Play Media</small>
+          <div style="margin-top:8px"><a href="https://www.youtube.com/watch?v=0DUFgI_O2YE" target="_blank" rel="noopener">Watch on YouTube →</a></div>
+        </div>
+      </div>
+
+      <!-- Video 3: 6pj-nyWP6Fo -->
+      <div class="vcard">
+        <div class="vthumb">
+          <img class="vposter" src="https://i.ytimg.com/vi/6pj-nyWP6Fo/maxresdefault.jpg" alt="Next Play Media video thumbnail" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/6pj-nyWP6Fo/hqdefault.jpg'" />
+          <button class="vplay" type="button" data-embed="https://www.youtube-nocookie.com/embed/6pj-nyWP6Fo?autoplay=1" aria-label="Play video"></button>
+        </div>
+        <div class="vinfo">
+          <h4>Next Play Media — Channel Highlight</h4>
+          <small>Next Play Media</small>
+          <div style="margin-top:8px"><a href="https://www.youtube.com/watch?v=6pj-nyWP6Fo" target="_blank" rel="noopener">Watch on YouTube →</a></div>
+        </div>
+      </div>
+
+      <!-- Video 4: EZNgeCnm9d8 -->
+      <div class="vcard">
+        <div class="vthumb">
+          <img class="vposter" src="https://i.ytimg.com/vi/EZNgeCnm9d8/maxresdefault.jpg" alt="Next Play Media video thumbnail" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/EZNgeCnm9d8/hqdefault.jpg'" />
+          <button class="vplay" type="button" data-embed="https://www.youtube-nocookie.com/embed/EZNgeCnm9d8?autoplay=1" aria-label="Play video"></button>
+        </div>
+        <div class="vinfo">
+          <h4>Next Play Media — New Release</h4>
+          <small>Next Play Media</small>
+          <div style="margin-top:8px"><a href="https://www.youtube.com/watch?v=EZNgeCnm9d8" target="_blank" rel="noopener">Watch on YouTube →</a></div>
+        </div>
+      </div>
+
+      <!-- Video 5: qaCy0g9oWgE -->
+      <div class="vcard">
+        <div class="vthumb">
+          <img class="vposter" src="https://i.ytimg.com/vi/qaCy0g9oWgE/maxresdefault.jpg" alt="Next Play Media video thumbnail" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/qaCy0g9oWgE/hqdefault.jpg'" />
+          <button class="vplay" type="button" data-embed="https://www.youtube-nocookie.com/embed/qaCy0g9oWgE?autoplay=1" aria-label="Play video"></button>
+        </div>
+        <div class="vinfo">
+          <h4>Next Play Media — From the Channel</h4>
+          <small>Next Play Media</small>
+          <div style="margin-top:8px"><a href="https://www.youtube.com/watch?v=qaCy0g9oWgE" target="_blank" rel="noopener">Watch on YouTube →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:44px">
+      <a href="https://www.youtube.com/@NextPlayMedia07/videos" target="_blank" rel="noopener" class="btn btn-ghost">See all videos on YouTube →</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET & PROBLEM -->
+<section id="market" style="background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Market & Problem</span>
+      <h2>The Content & Software Gap</h2>
+      <p>Creators and businesses both need digital capability they cannot build themselves.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card" style="border-color:rgba(78,205,196,.2)">
+        <span class="card-icon">🎬</span>
+        <div class="card-title" style="color:var(--teal)">YouTube creators & brands</div>
+        <ul class="clean">
+          <li><span class="bullet teal">•</span> Most struggle to stay consistent with high-quality uploads</li>
+          <li><span class="bullet teal">•</span> Editing, thumbnails, and strategy take time they don't have</li>
+          <li><span class="bullet teal">•</span> Generic agencies lack speed and platform-specific depth</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(212,90,46,.2)">
+        <span class="card-icon">📱</span>
+        <div class="card-title">Businesses & organizations</div>
+        <ul class="clean">
+          <li><span class="bullet">•</span> No in-house engineering for SaaS platforms</li>
+          <li><span class="bullet">•</span> Overpay for slow agencies or settle for no-code</li>
+          <li><span class="bullet">•</span> Demand for well-built, narrowly scoped SaaS products</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:24px">
+      <strong>🧩 The common thread:</strong> Organizations need digital capability they cannot build themselves. Next Play Media delivers both YouTube content and SaaS software under one roof.
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<section>
+  <div class="wrap">
+    <div class="stats-band">
+      <div class="stats-grid">
+        <div class="stat"><b>Weekly</b><span>YouTube Uploads</span></div>
+        <div class="stat"><b>70–85%</b><span>SaaS Margin</span></div>
+        <div class="stat"><b>$150–200K</b><span>Year 1 Revenue</span></div>
+        <div class="stat"><b>60 days</b><span>To First Revenue</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTOR SECTION -->
+<section id="invest" style="background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <div class="invest-band">
+      <span class="sec-tag">Investment Opportunity</span>
+      <h2>Invest in Next Play Media</h2>
+      <div class="ask">$25K – $50K</div>
+      <p>Two services, diversified risk, and clear milestones. Milestone-based tranches tied to measurable deliverables — not a speculative venture, but a cash-generating business ready to scale.</p>
+      <div class="hero-cta">
+        <a href="mailto:useglobal242@gmail.com?subject=Investment%20in%20Next%20Play%20Media" class="btn btn-primary">Request Investor Deck</a>
+        <a href="#roi" class="btn btn-ghost">View ROI Projections</a>
+      </div>
+      <div style="margin-top:22px">
+        <span class="tag tag-green">📧 useglobal242@gmail.com</span>
+        <span class="tag tag-orange">📱 +254 794 281 600</span>
+        <span class="tag tag-blue">🔗 Next Play Media · 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY INVEST -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Sponsorship Value</span>
+      <h2>7 Compelling Reasons to Invest</h2>
+    </div>
+
+    <div class="grid-2">
+      <ul class="clean">
+        <li><span class="bullet">1️⃣</span> <strong>Diversified Portfolio:</strong> Two uncorrelated revenue streams reduce single-point-of-failure risk</li>
+        <li><span class="bullet">2️⃣</span> <strong>Immediate Impact:</strong> Funds go directly to content production and SaaS client acquisition</li>
+        <li><span class="bullet">3️⃣</span> <strong>Proven Founders:</strong> Experienced team with a track record in software and media</li>
+        <li><span class="bullet">4️⃣</span> <strong>Clear Milestones:</strong> Monthly tranches tied to measurable deliverables</li>
+      </ul>
+      <ul class="clean">
+        <li><span class="bullet">5️⃣</span> <strong>Fast Cash Flow:</strong> YouTube content generates revenue within 60 days of investment</li>
+        <li><span class="bullet">6️⃣</span> <strong>Scalable Products:</strong> SaaS creates recurring revenue without proportional costs</li>
+        <li><span class="bullet">7️⃣</span> <strong>Exit Potential:</strong> Acquisition target in media or business software space</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- USE OF FUNDS -->
+<section style="background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Capital Allocation</span>
+      <h2>How Your Investment Will Be Used</h2>
+    </div>
+
+    <table class="roi-table">
+      <thead>
+        <tr>
+          <th style="color:var(--teal)">Service 1 · YouTube Content</th>
+          <th>Service 2 · SaaS</th>
+          <th style="color:var(--gold)">Shared</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Production tooling ($2K–4K)<br><small>Editing software, AI tools, storage</small></td>
+          <td>Dev tools & hosting ($2K–4K)<br><small>Infrastructure for builds/products</small></td>
+          <td>Legal & compliance ($2K–4K)<br><small>Contracts, entity setup, insurance</small></td>
+        </tr>
+        <tr>
+          <td>Contract editors ($8K–15K)<br><small>Scalable production team</small></td>
+          <td>Client acquisition ($1K–3K)<br><small>Outreach for SaaS clients</small></td>
+          <td>Buffer / runway ($8K–16K)<br><small>Operating cushion</small></td>
+        </tr>
+        <tr>
+          <td>Channel growth ($3K–7K)<br><small>Thumbnails, promotion, collabs</small></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:20px">
+      <span class="tag tag-green">Tranche 1: Entity + pilots</span>
+      <span class="tag tag-orange">Tranche 2: Services breakeven</span>
+      <span class="tag tag-blue">Tranche 3: First product</span>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section id="roi">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Returns Projected</span>
+      <h2>ROI Projections & Timeline</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="card-icon">💰</span>
+        <div class="card-title" style="color:var(--teal)">Service 1 Revenue (6 months)</div>
+        <ul class="clean">
+          <li><span class="bullet teal">•</span> Month 1–2: $8K–15K monthly (content packages)</li>
+          <li><span class="bullet teal">•</span> Month 3–6: $15K–25K monthly (ad + sponsor + clients)</li>
+          <li><span class="bullet teal">•</span> Annual run rate: $180K–300K</li>
+          <li><span class="bullet teal">•</span> Gross margin: 40–50%</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-icon">📈</span>
+        <div class="card-title">Service 2 Revenue (12 months)</div>
+        <ul class="clean">
+          <li><span class="bullet">•</span> Months 1–6: $5K–15K monthly (custom builds)</li>
+          <li><span class="bullet">•</span> Months 7–12: $10K–25K monthly (products + builds)</li>
+          <li><span class="bullet">•</span> SaaS recurring: $2K–5K monthly</li>
+          <li><span class="bullet">•</span> Gross margin: 70–85%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:24px">
+      <strong>📊 Combined Year 1 Projection:</strong> $150K–200K revenue with 55–65% gross margin. Conservative estimate with clear path to profitability.
+    </div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section style="background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Roadmap</span>
+      <h2>12-Month Milestones</h2>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="timeline-item">
+          <strong style="color:var(--teal)">Months 1–3</strong>
+          <ul class="clean">
+            <li><span class="bullet teal">✓</span> Legal entity formed, contracts ready</li>
+            <li><span class="bullet teal">✓</span> YouTube channel strategy + upload schedule locked</li>
+            <li><span class="bullet teal">✓</span> First SaaS scope defined</li>
+          </ul>
+        </div>
+        <div class="timeline-item orange">
+          <strong style="color:var(--orange)">Months 2–3</strong>
+          <ul class="clean">
+            <li><span class="bullet">✓</span> Publish consistently, collect audience data</li>
+            <li><span class="bullet">✓</span> Begin first custom build / owned product</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="timeline-item gold">
+          <strong style="color:var(--gold)">Months 4–6</strong>
+          <ul class="clean">
+            <li><span class="bullet" style="color:var(--gold)">✓</span> Scale to 8–12 active content clients</li>
+            <li><span class="bullet" style="color:var(--gold)">✓</span> Deliver first SaaS platform(s)</li>
+            <li><span class="bullet" style="color:var(--gold)">✓</span> Launch first owned SaaS product</li>
+          </ul>
+        </div>
+        <div class="timeline-item blue">
+          <strong style="color:var(--blue)">Months 7–12</strong>
+          <ul class="clean">
+            <li><span class="bullet" style="color:var(--blue)">✓</span> Evaluate reinvestment or next raise</li>
+            <li><span class="bullet" style="color:var(--blue)">✓</span> Expand SaaS build pipeline</li>
+            <li><span class="bullet" style="color:var(--blue)">✓</span> Iterate owned products based on sales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;background:rgba(212,90,46,.05);border-radius:14px;padding:14px;text-align:center;color:var(--muted)">
+      ⏳ <strong style="color:var(--text)">12 months to SaaS milestone</strong> · revenue from both services
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Team & Structure</span>
+      <h2>Founder + Developer / Co-Founder</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="team-card founder">
+        <div class="team-role">👤 Founder · Mark Steven Consultancy Ltd.</div>
+        <ul class="clean">
+          <li><span class="bullet">•</span> Capital, business strategy, investor relations</li>
+          <li><span class="bullet">•</span> Financial management, legal oversight</li>
+          <li><span class="bullet">•</span> Final decision-making authority</li>
+          <li><span class="bullet">•</span> Initial equity: <strong>60%</strong></li>
+        </ul>
+      </div>
+      <div class="team-card dev">
+        <div class="team-role">👨‍💻 Developer / Co-Founder · Oluwafemi Jegede</div>
+        <ul class="clean">
+          <li><span class="bullet teal">•</span> Software development, technical execution</li>
+          <li><span class="bullet teal">•</span> YouTube content systems & SaaS delivery</li>
+          <li><span class="bullet teal">•</span> Primary authority over technical architecture</li>
+          <li><span class="bullet teal">•</span> Initial equity: <strong>40%</strong> (vesting over 4 years)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;background:rgba(255,255,255,.02);border-radius:14px;padding:14px">
+      <span class="tag tag-orange">📄 Vesting: 1-year cliff, monthly thereafter</span>
+      <span class="tag tag-blue">⚖️ Governance: mutual agreement on major decisions</span>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section style="background:var(--bg-soft);border-top:1px solid var(--border)">
+  <div class="wrap">
+    <div class="invest-band">
+      <span class="sec-tag">Next Step</span>
+      <h2>Ready to invest or work with us?</h2>
+      <p>Schedule a working session to finalise deal terms and scope first engagements.</p>
+      <div class="hero-cta">
+        <a href="mailto:useglobal242@gmail.com?subject=Working%20Session%20%E2%80%94%20Next%20Play%20Media" class="btn btn-primary">📧 useglobal242@gmail.com</a>
+        <a href="https://www.youtube.com/@NextPlayMedia07" target="_blank" rel="noopener" class="btn btn-ghost">▶ Visit the Channel</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <div class="logo-mark">N</div>
+          <span>Next Play<em>Media</em></span>
+        </a>
+        <p>YouTube content creation and SaaS services. Two services, one company.</p>
+        <div class="socials">
+          <a class="soc" href="https://www.youtube.com/@NextPlayMedia07" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+          <a class="soc" href="#" aria-label="X">𝕏</a>
+          <a class="soc" href="#" aria-label="Instagram">◎</a>
+          <a class="soc" href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h5>Channel</h5>
+        <ul>
+          <li><a href="https://www.youtube.com/@NextPlayMedia07" target="_blank" rel="noopener">Home</a></li>
+          <li><a href="https://www.youtube.com/@NextPlayMedia07/videos" target="_blank" rel="noopener">Videos</a></li>
+          <li><a href="https://www.youtube.com/@NextPlayMedia07/shorts" target="_blank" rel="noopener">Shorts</a></li>
+          <li><a href="https://www.youtube.com/@NextPlayMedia07/playlists" target="_blank" rel="noopener">Playlists</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#market">Market</a></li>
+          <li><a href="#invest">Investors</a></li>
+          <li><a href="#team">Team</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Business</h5>
+        <ul>
+          <li><a href="mailto:useglobal242@gmail.com">Sponsorships</a></li>
+          <li><a href="mailto:useglobal242@gmail.com">Press</a></li>
+          <li><a href="mailto:useglobal242@gmail.com">Collaborations</a></li>
+          <li><a href="mailto:useglobal242@gmail.com">Investor Relations</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Next Play Media · Mark Steven Consultancy Ltd. All rights reserved.</span>
+      <span>YouTube Content Creation & SaaS Services</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Smooth reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.card, .channel-box, .engine, .team-card, .timeline-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    observer.observe(el);
+  });
+
+  // Video cards: load the privacy-enhanced player only on click.
+  // Avoids YouTube Error 153 (video player configuration error) on page load.
+  document.querySelectorAll('.vplay').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = btn.dataset.embed;
+      frame.title = 'Next Play Media video';
+      frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.setAttribute('allowfullscreen', '');
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      btn.parentNode.appendChild(frame);
+      btn.style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>
